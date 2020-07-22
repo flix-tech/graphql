@@ -7,10 +7,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"net/url"
 
 	"github.com/danielnaveda/graphql/internal/jsonutil"
-	"golang.org/x/net/context/ctxhttp"
 )
 
 // Client is a GraphQL client.
@@ -18,6 +16,7 @@ type Client struct {
 	url         string // GraphQL server URL.
 	httpClient  *http.Client
 	queryString queryType
+	bearerToken string
 }
 
 // NewClient creates a GraphQL client targeting the specified GraphQL server URL.
@@ -31,6 +30,12 @@ func NewClient(url string, httpClient *http.Client) *Client {
 		httpClient:  httpClient,
 		queryString: disabled,
 	}
+}
+
+// AddBearerToken adds token in the http header
+func (c *Client) AddBearerToken(token string) *Client {
+	c.bearerToken = token
+	return c
 }
 
 // EnableQueryString enables query string mode for graphql queries
@@ -85,7 +90,7 @@ func (c *Client) do(ctx context.Context, op operationType, v interface{}, variab
 	if op == queryOperation && c.queryString == enabled {
 		resp, err = GetWithQueryString(ctx, c.httpClient, c.url, query, variables)
 	} else {
-		resp, err = ctxhttp.Post(ctx, c.httpClient, c.url, "application/json", &buf)
+		resp, err = PostWithBearerToken(ctx, c.httpClient, c.url, "application/json", &buf, c.bearerToken)
 	}
 
 	if err != nil {
@@ -143,18 +148,6 @@ const (
 	mutationOperation
 	//subscriptionOperation // Unused.
 )
-
-// GetWithQueryString sends an http get request with the query and variables as a query string
-func GetWithQueryString(ctx context.Context, client *http.Client, graphqlURL string, query string, variables map[string]interface{}) (*http.Response, error) {
-	queryString := url.QueryEscape(query)
-	variableBytes, err := json.Marshal(variables)
-	if err != nil {
-		return &http.Response{}, err
-	}
-	variableString := url.QueryEscape(string(variableBytes))
-	resp, err := ctxhttp.Get(ctx, client, graphqlURL+`?query=`+queryString+`&variables=`+variableString)
-	return resp, err
-}
 
 type queryType uint8
 
