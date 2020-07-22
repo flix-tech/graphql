@@ -32,6 +32,12 @@ func NewClient(url string, httpClient *http.Client) *Client {
 	}
 }
 
+// AddBearerToken adds token in the http header
+func (c *Client) AddBearerToken(token string) *Client {
+	c.bearerToken = token
+	return c
+}
+
 // EnableQueryString enables query string mode for graphql queries
 func (c *Client) EnableQueryString() *Client {
 	c.queryString = enabled
