@@ -16,6 +16,7 @@ type Client struct {
 	url         string // GraphQL server URL.
 	httpClient  *http.Client
 	queryString queryType
+	bearerToken string
 }
 
 // NewClient creates a GraphQL client targeting the specified GraphQL server URL.
@@ -83,7 +84,7 @@ func (c *Client) do(ctx context.Context, op operationType, v interface{}, variab
 	if op == queryOperation && c.queryString == enabled {
 		resp, err = GetWithQueryString(ctx, c.httpClient, c.url, query, variables)
 	} else {
-		resp, err = PostWithHeaders(ctx, c.httpClient, c.url, "application/json", &buf)
+		resp, err = PostWithBearerToken(ctx, c.httpClient, c.url, "application/json", &buf, c.bearerToken)
 	}
 
 	if err != nil {

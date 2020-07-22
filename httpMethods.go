@@ -22,13 +22,16 @@ func GetWithQueryString(ctx context.Context, client *http.Client, graphqlURL str
 	return resp, err
 }
 
-func PostWithHeaders(ctx context.Context, client *http.Client, url string, bodyType string, body io.Reader) (*http.Response, error) {
+func PostWithBearerToken(ctx context.Context, client *http.Client, url string, bodyType string, body io.Reader, token string) (*http.Response, error) {
 	var resp *http.Response
 	req, err := http.NewRequest("POST", url, body)
 	if err != nil {
 		return resp, err
 	}
 	req.Header.Set("Content-Type", "application/json")
+	if token != `` {
+		req.Header.Set("Authorization", "Bearer "+token)
+	}
 	resp, err = ctxhttp.Do(ctx, client, req)
 	if err != nil {
 		return resp, err
