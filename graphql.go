@@ -64,6 +64,14 @@ func (c *Client) Mutate(ctx context.Context, m interface{}, variables map[string
 	return c.do(ctx, mutationOperation, m, variables)
 }
 
+func GetQuery(queryStruct interface{}, variables map[string]interface{}) string {
+	return constructQuery(queryStruct, variables)
+}
+
+func GetMutation(mutationStruct interface{}, variables map[string]interface{}) string {
+	return constructMutation(mutationStruct, variables)
+}
+
 // do executes a single GraphQL operation.
 func (c *Client) do(ctx context.Context, op operationType, v interface{}, variables map[string]interface{}) error {
 	var query string
