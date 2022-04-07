@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/danielnaveda/graphql/internal/jsonutil"
+	"github.com/flix-tech/graphql/internal/jsonutil"
 )
 
 // Client is a GraphQL client.
