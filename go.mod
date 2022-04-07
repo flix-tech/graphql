@@ -1,6 +1,6 @@
-module github.com/danielnaveda/graphql
+module github.com/flix-tech/graphql
 
-go 1.14
+go 1.17
 
 require (
 	github.com/graph-gophers/graphql-go v0.0.0-20200622220639-c1d9693c95a6
