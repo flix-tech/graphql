@@ -1,7 +1,7 @@
 graphql
 =======
 
-[![Build Status](https://travis-ci.org/shurcooL/graphql.svg?branch=master)](https://travis-ci.org/shurcooL/graphql) [![GoDoc](https://godoc.org/github.com/danielnaveda/graphql?status.svg)](https://godoc.org/github.com/danielnaveda/graphql)
+[![Build Status](https://travis-ci.org/shurcooL/graphql.svg?branch=master)](https://travis-ci.org/shurcooL/graphql) [![GoDoc](https://godoc.org/github.com/flix-tech/graphql?status.svg)](https://godoc.org/github.com/flix-tech/graphql)
 
 Package `graphql` provides a GraphQL client implementation.
 
@@ -13,7 +13,7 @@ Installation
 `graphql` requires Go version 1.8 or later.
 
 ```bash
-go get -u github.com/danielnaveda/graphql
+go get -u github.com/flix-tech/graphql
 ```
 
 Usage
