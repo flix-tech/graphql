@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/danielnaveda/graphql"
-	"github.com/danielnaveda/graphql/internal/jsonutil"
+	"github.com/flix-tech/graphql"
+	"github.com/flix-tech/graphql/internal/jsonutil"
 )
 
 func TestUnmarshalGraphQL_benchmark(t *testing.T) {
